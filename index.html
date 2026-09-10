@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLCC — Personalised Body Care. Backed by Science.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#1B1A18',
+          cream: '#F8F5ED',
+          near: '#242220',
+          card: '#F6F2EA',
+          navy: '#10314D',
+          'navy-input': '#27455E',
+          orange: '#F37021',
+          'orange-dark': '#D95F13',
+          body: '#5B5753',
+          statblue: '#004E96',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  * { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1B1A18; background:#fff; }
+  .font-display { font-family: 'Roboto Condensed', sans-serif; }
+  .font-brand-serif { font-family: 'Playfair Display', serif; }
+
+  /* Marquee ticker */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+
+
+  /* Scroll reveal — visible by default; JS opts elements into the hidden
+     start state so content never disappears if JS fails or is unsupported */
+  .reveal, .reveal-stagger > * { transition: opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1); }
+  .reveal.pre { opacity: 0; transform: translateY(28px); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.pre > * { opacity: 0; transform: translateY(24px); }
+  .reveal-stagger.in > * { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.05s}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.13s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.21s}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.29s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.37s}
+
+  /* hero image ken burns */
+  .kenburns { animation: kb 20s ease-in-out infinite alternate; }
+  @keyframes kb { from{ transform: scale(1);} to { transform: scale(1.035);} }
+
+  /* underline hover */
+  .link-underline { position: relative; }
+  .link-underline::after {
+    content:""; position:absolute; left:0; bottom:-3px; width:0; height:1.5px; background:currentColor;
+    transition: width .35s cubic-bezier(.16,.84,.44,1);
+  }
+  .link-underline:hover::after { width:100%; }
+
+  ::selection { background: #F37021; color: #fff; }
+
+  /* Tactile press feedback + accessible focus, applied site-wide */
+  a, button { transition: transform .15s ease, color .3s, background-color .3s, border-color .3s; }
+  a:active, button:active { transform: scale(0.97); }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid #F37021; outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* Carousel */
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  #concern-rail.dragging { cursor: grabbing; scroll-snap-type: none; }
+  #concern-rail.dragging .carousel-card { pointer-events: none; }
+
+  input:focus { outline: none; }
+  .navy-input::placeholder{ color:#a9bccb; }
+</style>
+</head>
+<body class="bg-white antialiased">
+
+<!-- ===================== ANNOUNCEMENT TICKER ===================== -->
+<div class="bg-near text-cream overflow-hidden select-none">
+  <div class="marquee-track py-2.5 text-[11px] md:text-xs tracking-[0.18em] font-medium">
+    <div class="flex items-center shrink-0">
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> COMPLIMENTARY SKIN CONSULTATION WITH EVERY ORDER</span>
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> NEW: VITAMIN C RADIANCE RANGE — NOW LIVE</span>
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> BOOK A CLINIC SESSION &amp; GET 20% OFF YOUR FIRST VISIT</span>
+    </div>
+    <div class="flex items-center shrink-0" aria-hidden="true">
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> COMPLIMENTARY SKIN CONSULTATION WITH EVERY ORDER</span>
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> NEW: VITAMIN C RADIANCE RANGE — NOW LIVE</span>
+      <span class="flex items-center gap-3 px-8 whitespace-nowrap"><span class="text-orange">✦</span> BOOK A CLINIC SESSION &amp; GET 20% OFF YOUR FIRST VISIT</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<header id="nav" class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-black/5 transition-shadow">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 h-[86px] flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <img src="assets/vlcc-logo.png" alt="VLCC" class="h-7 w-auto select-none">
+      <span class="hidden md:block w-px h-6 bg-black/15"></span>
+      <nav class="hidden lg:flex items-center gap-7 text-[13px] font-semibold tracking-wide text-ink">
+        <a href="#" class="flex items-center gap-1 hover:text-orange transition-colors">CONCERNS
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <a href="#" class="flex items-center gap-1 hover:text-orange transition-colors">SOLUTIONS
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+        <a href="#" class="hover:text-orange transition-colors">SALON</a>
+        <a href="#" class="flex items-center gap-1 hover:text-orange transition-colors">EXPLORE VLCC
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#book" class="group hidden sm:flex items-center gap-2 bg-orange hover:bg-orange-dark text-white text-[12px] font-bold tracking-wide px-6 py-3.5 transition-all duration-300">
+        BOOK A CONSULTATION
+        <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="hidden sm:flex items-center gap-2 border border-ink/80 text-ink text-[12px] font-bold tracking-wide px-6 py-3.5 hover:bg-ink hover:text-white transition-all duration-300">
+        LOGIN
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button id="mobileMenuBtn" class="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 text-ink" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg id="menuIconOpen" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg id="menuIconClose" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="lg:hidden hidden absolute top-full left-0 right-0 border-t border-black/5 bg-cream shadow-[0_20px_40px_-20px_rgba(0,0,0,0.25)] max-h-[calc(100vh-86px)] overflow-y-auto">
+    <nav class="max-w-[1568px] mx-auto px-6 py-2 flex flex-col text-[14px] font-semibold text-ink">
+      <a href="#" class="flex items-center justify-between py-3.5 border-b border-black/5 hover:text-orange transition-colors">CONCERNS
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#" class="flex items-center justify-between py-3.5 border-b border-black/5 hover:text-orange transition-colors">SOLUTIONS
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#" class="flex items-center justify-between py-3.5 border-b border-black/5 hover:text-orange transition-colors">SALON</a>
+      <a href="#" class="flex items-center justify-between py-3.5 border-b border-black/5 hover:text-orange transition-colors">EXPLORE VLCC
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#" class="sm:hidden flex items-center justify-between py-3.5 border-b border-black/5 hover:text-orange transition-colors">LOGIN</a>
+      <a href="#book" class="group sm:hidden flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white text-[12px] font-bold tracking-wide px-6 py-3.5 mt-4 mb-4 transition-all duration-300">
+        BOOK A CONSULTATION
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="relative bg-ink overflow-hidden">
+  <div class="relative h-[760px] md:h-[560px] lg:h-[580px] w-full">
+    <picture>
+      <source media="(min-width: 768px)" srcset="assets/hero_woman.jpg">
+      <img src="assets/hero_woman_mobile.jpg" alt="Woman in spa robe" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover object-[38%_50%] md:object-[50%_35%] kenburns">
+    </picture>
+    <div class="absolute top-0 right-0 bottom-0 left-0 md:hidden" style="background:linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0) 55%);"></div>
+    <div class="absolute top-0 right-0 bottom-0 left-0" style="background:linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.38) 22%, rgba(0,0,0,0.14) 40%, rgba(0,0,0,0) 52%);"></div>
+
+    <div class="relative h-full max-w-[1568px] mx-auto px-6 md:px-10 pt-10 pb-16 md:py-0 flex flex-col justify-end md:justify-center">
+      <div class="max-w-2xl reveal-stagger" id="hero-reveal">
+        <div class="flex items-center gap-3 text-white/90 text-[11px] md:text-[12px] tracking-[0.2em] font-semibold mb-3 md:mb-4">
+          <span class="w-8 h-px bg-white/60"></span> SINCE 1989 · INDIA
+        </div>
+        <h1 class="font-display font-light text-white text-[20px] md:text-[42px] leading-[1.05] mb-1.5 md:mb-0 tracking-wide">PERSONALISED</h1>
+        <h1 class="font-display font-extrabold text-white text-[36px] md:text-[72px] lg:text-[84px] leading-[1.02] md:leading-[0.96] mt-0 md:-mt-1">BODY CARE.</h1>
+        <h1 class="font-display font-extrabold text-white text-[36px] md:text-[72px] lg:text-[84px] leading-[1.02] md:leading-[0.96] mb-3 md:mb-4">BACKED BY SCIENCE.</h1>
+        <p class="text-white/85 text-[14px] md:text-[16px] leading-relaxed max-w-xl mb-6">
+          Weight, skin, hair and body — assessed by doctors, planned around your medical history, and delivered at 330+ VLCC centres across India.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4">
+          <a href="#solve" class="group flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white text-[13px] font-bold tracking-wide px-7 py-4 transition-all duration-300">
+            EXPLORE YOUR CONCERN
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+          <a href="#book" class="group flex items-center justify-center gap-2 border border-white/70 text-white text-[13px] font-bold tracking-wide px-7 py-4 hover:bg-white hover:text-ink transition-all duration-300">
+            BOOK A CONSULTATION
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-5 md:bottom-6 left-6 md:left-10 text-white/80 text-[12px] md:text-[13px] tracking-wide font-medium">01 / 04</div>
+    <div class="absolute bottom-5 md:bottom-6 right-6 md:right-10 text-white/70 text-[10.5px] md:text-[13px] tracking-[0.15em] md:tracking-[0.2em] font-medium whitespace-nowrap">EVERYDAY CARE, CONSIDERED.</div>
+  </div>
+</section>
+
+<!-- ===================== TRUST BAR ===================== -->
+<section class="bg-white border-b border-black/10">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 py-7 flex flex-wrap items-center justify-center gap-x-14 gap-y-8 reveal-stagger" id="trust-reveal">
+    <div class="flex items-center gap-3.5">
+      <svg class="w-10 h-10 text-orange shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 001.8 3h9.4a2 2 0 001.8-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>
+      <div>
+        <div class="font-display font-bold text-[19px] tracking-wide">CLINICALLY TESTED</div>
+        <div class="text-[13px] text-body">Proven active concentrations</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3.5">
+      <svg class="w-10 h-10 text-orange shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20c8-1 13-6 15-15-9 1-14 6-15 15z"/><path d="M9 15c3-3 6-6 9-9"/></svg>
+      <div>
+        <div class="font-display font-bold text-[19px] tracking-wide">CLEAN FORMULAS</div>
+        <div class="text-[13px] text-body">No parabens or sulphates</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3.5">
+      <svg class="w-10 h-10 text-orange shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <div class="font-display font-bold text-[19px] tracking-wide">DERMAT APPROVED</div>
+        <div class="text-[13px] text-body">Developed with experts</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3.5">
+      <svg class="w-10 h-10 text-orange shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>
+      <div>
+        <div class="font-display font-bold text-[19px] tracking-wide">EXPERTS ASSURED</div>
+        <div class="text-[13px] text-body">Trusted by doctors and experts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT ARE YOU LOOKING TO SOLVE ===================== -->
+<section id="solve" class="bg-cream py-20 md:py-24 relative">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 text-center reveal" id="solve-heading">
+    <div class="text-orange font-bold text-[15px] tracking-wide mb-4">START WITH YOU</div>
+    <h2 class="font-display font-bold text-5xl md:text-7xl leading-[0.98] mb-8">WHAT ARE YOU<br>LOOKING TO SOLVE?</h2>
+    <p class="text-body text-[15px] md:text-base leading-relaxed max-w-xl mx-auto">
+      Every programme begins with an assessment, not a package. Choose a concern and we will show you what the first visit involves, what it costs and how long it takes.
+    </p>
+  </div>
+
+  <div class="max-w-[1568px] mx-auto mt-14">
+    <div class="relative px-6 md:px-10">
+      <!-- badge (floats over the rail, unaffected by drag/scroll) -->
+      <div class="hidden md:flex absolute -top-8 z-20 group/badge cursor-pointer" style="left:78%;">
+        <div class="relative w-24 h-24 transition-transform duration-500 ease-out group-hover/badge:scale-[1.08]">
+          <svg class="absolute top-0 right-0 bottom-0 left-0 w-24 h-24 text-orange" viewBox="0 0 100 100">
+            <defs><path id="circlePath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <circle cx="50" cy="50" r="48" fill="#F37021"/>
+            <text fill="white" font-size="8.3" font-weight="700" letter-spacing="1.5">
+              <textPath href="#circlePath" startOffset="0%">100% PROVEN RESULTS • 100% PROVEN RESULTS •</textPath>
+            </text>
+          </svg>
+          <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+            <div class="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow transition-transform duration-500 group-hover/badge:scale-110">
+              <svg class="w-3.5 h-3.5 text-orange ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="concern-rail" class="no-scrollbar reveal-stagger flex gap-3 md:gap-4 overflow-x-auto cursor-grab select-none" style="scroll-padding-left:1.5rem; scroll-behavior:auto;">
+        <!-- Card 1 -->
+        <a href="#" draggable="false" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_skin.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 60% 40%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">SKIN &amp;<br>DERMAT</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Acne, scars, fine line &amp; wrinkles.</p>
+          </div>
+        </a>
+        <!-- Card 2 -->
+        <a href="#" draggable="false" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_hair.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 68% 42%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">HAIR<br>TREATMENT</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Strength, scalp, thinning &amp; fall treatment</p>
+          </div>
+        </a>
+        <!-- Card 3 -->
+        <a href="#" draggable="false" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_body.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 50% 20%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">BODY<br>CARE</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Muscle, body tightening, Ayurvedic therapy</p>
+          </div>
+        </a>
+        <!-- Card 4 -->
+        <a href="#" draggable="false" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_weight.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 38% 38%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">WEIGHT &amp;<br>WELLNESS</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Body sculpting, arm &amp; leg fat reduction</p>
+          </div>
+        </a>
+        <!-- Card 5 -->
+        <a href="#" draggable="false" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_salon.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 42% 45%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">SALON<br>SERVICES</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Hair, skin and grooming at 330+ centres</p>
+          </div>
+        </a>
+        <!-- Duplicate set (hidden from a11y tree) — enables a seamless continuous loop:
+             once the rail scrolls past the first set, it silently rewinds, so the
+             motion never stops and never visibly "jumps". -->
+        <a href="#" draggable="false" aria-hidden="true" tabindex="-1" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_skin.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 60% 40%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">SKIN &amp;<br>DERMAT</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Acne, scars, fine line &amp; wrinkles.</p>
+          </div>
+        </a>
+        <a href="#" draggable="false" aria-hidden="true" tabindex="-1" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_hair.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 68% 42%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">HAIR<br>TREATMENT</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Strength, scalp, thinning &amp; fall treatment</p>
+          </div>
+        </a>
+        <a href="#" draggable="false" aria-hidden="true" tabindex="-1" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_body.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 50% 20%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">BODY<br>CARE</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Muscle, body tightening, Ayurvedic therapy</p>
+          </div>
+        </a>
+        <a href="#" draggable="false" aria-hidden="true" tabindex="-1" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_weight.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 38% 38%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">WEIGHT &amp;<br>WELLNESS</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Body sculpting, arm &amp; leg fat reduction</p>
+          </div>
+        </a>
+        <a href="#" draggable="false" aria-hidden="true" tabindex="-1" class="carousel-card group relative shrink-0 snap-start w-[58%] xs:w-[46%] sm:w-[36%] md:w-[24%] lg:w-[19%] aspect-[1/1.95] overflow-hidden">
+          <img src="assets/concern_salon.jpg" draggable="false" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" style="object-position: 42% 45%;">
+          <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-1">
+            <h3 class="font-display font-extrabold text-white text-[26px] md:text-[28px] leading-[1.05] mb-1.5">SALON<br>SERVICES</h3>
+            <p class="text-white/85 text-[12.5px] font-semibold uppercase tracking-wide leading-snug">Hair, skin and grooming at 330+ centres</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-10 px-6 md:px-10">
+      <a href="#" class="group flex items-center gap-2 bg-orange hover:bg-orange-dark text-white text-[13px] font-bold tracking-wide px-7 py-4 transition-all duration-300 shrink-0">
+        DISCOVER MORE
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 35 YEARS ===================== -->
+<section class="bg-white py-20 md:py-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 md:gap-20 items-stretch">
+    <div class="relative reveal aspect-[4/5] md:aspect-auto" id="img35-reveal">
+      <div class="overflow-hidden absolute inset-0">
+        <img src="assets/clinical_full.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+      </div>
+      <div class="absolute -right-8 top-[46%] -translate-y-1/2 w-28 h-28 hidden md:flex group/badge cursor-pointer">
+        <div class="relative w-28 h-28 transition-transform duration-500 ease-out group-hover/badge:scale-[1.08]">
+          <svg class="absolute top-0 right-0 bottom-0 left-0 w-28 h-28 text-orange" viewBox="0 0 100 100">
+            <defs><path id="circlePath2" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <circle cx="50" cy="50" r="48" fill="#F37021"/>
+            <text fill="white" font-size="8.3" font-weight="700" letter-spacing="1.5">
+              <textPath href="#circlePath2" startOffset="0%">ETHICAL. SAFE. EFFECTIVE. •</textPath>
+            </text>
+          </svg>
+          <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+            <div class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow transition-transform duration-500 group-hover/badge:scale-110">
+              <svg class="w-4 h-4 text-orange ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" id="text35-reveal">
+      <div class="flex items-center gap-3 text-orange font-bold text-[12px] tracking-[0.2em] mb-4">
+        <span class="w-8 h-px bg-orange"></span> WHY VLCC?
+      </div>
+      <h2 class="font-display font-bold text-orange text-6xl md:text-7xl leading-[0.92] mb-1">35 YEARS</h2>
+      <h3 class="font-display font-bold text-ink text-2xl md:text-[32px] leading-tight mb-6">OF CLINICAL PRACTICE,<br>NOT A WELLNESS TREND.</h3>
+      <p class="text-body text-[15px] leading-relaxed max-w-lg mb-3">
+        VLCC has treated Indian bodies since 1989. Every plan is written by a qualified practitioner, reviewed weekly, and adjusted as your body responds — and we will tell you plainly when a programme is not right for you.
+      </p>
+
+      <div class="mt-6 reveal-stagger" id="numlist-reveal">
+        <div class="flex gap-6 py-5 border-t border-black/10">
+          <span class="font-display font-bold text-orange text-xl w-8">01</span>
+          <div>
+            <h4 class="font-display font-bold text-[15px] tracking-wide mb-1">SCIENCE-BACKED PROTOCOLS</h4>
+            <p class="text-body text-[14px] leading-snug">Technologies and treatment protocols reviewed by our medical board before they reach a centre.</p>
+          </div>
+        </div>
+        <div class="flex gap-6 py-5 border-t border-black/10">
+          <span class="font-display font-bold text-orange text-xl w-8">02</span>
+          <div>
+            <h4 class="font-display font-bold text-[15px] tracking-wide mb-1">EXPERT-LED CARE</h4>
+            <p class="text-body text-[14px] leading-snug">250+ doctors, nutritionists, dermatologists and trichologists across specialisations.</p>
+          </div>
+        </div>
+        <div class="flex gap-6 py-5 border-t border-black/10">
+          <span class="font-display font-bold text-orange text-xl w-8">03</span>
+          <div>
+            <h4 class="font-display font-bold text-[15px] tracking-wide mb-1">PERSONALISED PROGRAMMES</h4>
+            <p class="text-body text-[14px] leading-snug">Plans built on your assessment — medical history, body composition, routine and goals.</p>
+          </div>
+        </div>
+        <div class="flex gap-6 py-5 border-t border-b border-black/10">
+          <span class="font-display font-bold text-orange text-xl w-8">04</span>
+          <div>
+            <h4 class="font-display font-bold text-[15px] tracking-wide mb-1">HOLISTIC APPROACH</h4>
+            <p class="text-body text-[14px] leading-snug">Treatment, nutrition, fitness and lifestyle guidance handled together, not separately.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="#book" class="group inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white text-[13px] font-bold tracking-wide px-7 py-4 mt-7 transition-all duration-300">
+        BOOK A CONSULTATION
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 mt-16">
+    <div class="rounded-2xl border border-black/10 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/10 overflow-hidden reveal-stagger" id="stats35-reveal">
+      <div class="p-7">
+        <i class="fa-solid fa-award text-orange text-[44px] mb-2 block" aria-hidden="true"></i>
+        <div class="font-display font-extrabold text-[22px] tracking-tight"><span class="counter" data-target="35" data-suffix="+">35+</span> YEARS</div>
+        <div class="text-body text-[15px] mt-1.5">of clinical practice since 1989</div>
+      </div>
+      <div class="p-7">
+        <i class="fa-solid fa-user-doctor text-orange text-[44px] mb-2 block" aria-hidden="true"></i>
+        <div class="font-display font-extrabold text-[22px] tracking-tight"><span class="counter" data-target="250" data-suffix="+">250+</span> DOCTORS &amp; EXPERTS</div>
+        <div class="text-body text-[15px] mt-1.5">with multidisciplinary expertise</div>
+      </div>
+      <div class="p-7">
+        <div class="relative inline-grid place-items-center mb-2" style="width:44px;height:44px;" aria-hidden="true">
+          <i class="fa-solid fa-certificate text-orange text-[44px] col-start-1 row-start-1"></i>
+          <i class="fa-solid fa-check text-white text-[15px] col-start-1 row-start-1"></i>
+        </div>
+        <div class="font-display font-extrabold text-[22px] tracking-tight">IMA-APPROVED PROGRAMMES*</div>
+        <div class="text-body text-[15px] mt-1.5">designed for safe, evidence-led care</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESULTS YOU CAN SEE ===================== -->
+<section class="bg-cream py-20 md:py-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal" id="results-heading">
+      <div>
+        <div class="text-orange font-bold text-[12px] tracking-[0.2em] mb-4">CLIENTS FEEDBACK</div>
+        <h2 class="font-display font-bold text-6xl md:text-7xl leading-[1.0]"><span class="text-orange">RESULTS</span> YOU CAN SEE</h2>
+        <p class="font-display font-semibold text-xl md:text-2xl mt-3 text-ink/90 tracking-wide">WHAT PEOPLE CAME IN FOR, AND WHAT CHANGED</p>
+      </div>
+      <p class="text-body text-[16px] leading-relaxed max-w-sm">Outcomes measured in the real world: programmes that combine practitioner-led care, evidence and measurable progress.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 reveal-stagger" id="testi-reveal">
+      <div class="group bg-white hover:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.25)] transition-shadow duration-500">
+        <div class="relative overflow-hidden aspect-[8/5]">
+          <img src="assets/testi_1.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <button class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-black/35 backdrop-blur-sm ring-1 ring-white/70 flex items-center justify-center group-hover:bg-orange group-hover:ring-orange transition-all duration-300">
+            <svg class="w-[18px] h-[18px] text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="p-7">
+          <div class="text-statblue font-bold text-[12px] tracking-wide mb-3">WEIGHT MANAGEMENT · CLIENT</div>
+          <div class="font-extrabold text-statblue text-5xl mb-1.5"><span class="counter" data-target="12" data-suffix=" kgs">12 kgs</span></div>
+          <p class="text-body text-[14px] font-semibold mb-5">lost over a 6-week programme</p>
+          <p class="text-ink/90 text-[15px] leading-relaxed mb-5">"I had tried diets before. This was the first time someone measured what mattered, built a plan around my routine and helped me stay consistent."</p>
+          <div class="border-t border-black/10 pt-5">
+            <div class="font-bold text-[16px]">Parmesh Aggarwal</div>
+            <div class="text-body text-[13.5px]">Weight Loss Solution</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group bg-white hover:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.25)] transition-shadow duration-500">
+        <div class="relative overflow-hidden aspect-[8/5]">
+          <img src="assets/testi_2.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <button class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-black/35 backdrop-blur-sm ring-1 ring-white/70 flex items-center justify-center group-hover:bg-orange group-hover:ring-orange transition-all duration-300">
+            <svg class="w-[18px] h-[18px] text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="p-7">
+          <div class="text-statblue font-bold text-[12px] tracking-wide mb-3">SKIN · PIGMENTATION</div>
+          <div class="font-extrabold text-statblue text-5xl mb-1.5"><span class="counter" data-target="8" data-suffix=" weeks">8 weeks</span></div>
+          <p class="text-body text-[14px] font-semibold mb-5">to visible change in pigmentation</p>
+          <p class="text-ink/90 text-[15px] leading-relaxed mb-5">"After dermatological assessment and a personalised plan, I noticed real change — without having to hide behind makeup."</p>
+          <div class="border-t border-black/10 pt-5">
+            <div class="font-bold text-[16px]">Ananya R.</div>
+            <div class="text-body text-[13.5px]">Skin Treatment</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group bg-white hover:shadow-[0_25px_60px_-25px_rgba(0,0,0,0.25)] transition-shadow duration-500">
+        <div class="relative overflow-hidden aspect-[8/5]">
+          <img src="assets/testi_3.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <button class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-black/35 backdrop-blur-sm ring-1 ring-white/70 flex items-center justify-center group-hover:bg-orange group-hover:ring-orange transition-all duration-300">
+            <svg class="w-[18px] h-[18px] text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="p-7">
+          <div class="text-statblue font-bold text-[12px] tracking-wide mb-3">HAIR · HAIR FALL</div>
+          <div class="font-extrabold text-statblue text-5xl mb-1.5"><span class="counter" data-target="70" data-suffix="%">70%</span></div>
+          <p class="text-body text-[14px] font-semibold mb-5">reduction in hair fall over 6 months</p>
+          <p class="text-ink/90 text-[15px] leading-relaxed mb-5">"I was looking for something that actually worked for me. The plan and follow-ups helped me see consistent progress."</p>
+          <div class="border-t border-black/10 pt-5">
+            <div class="font-bold text-[16px]">Jyoti Sinha</div>
+            <div class="text-body text-[13.5px]">Hair Treatment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-white shadow-[0_20px_50px_-25px_rgba(0,0,0,0.2)] grid grid-cols-2 md:grid-cols-5 divide-x divide-black/10 reveal" id="stats-full-reveal">
+      <div class="text-center py-7 px-2">
+        <div class="font-bold text-orange text-2xl md:text-3xl"><span class="counter" data-target="35" data-suffix="+">35+</span></div>
+        <div class="text-body text-[13px] mt-1">Years of care</div>
+      </div>
+      <div class="text-center py-7 px-2">
+        <div class="font-bold text-orange text-2xl md:text-3xl"><span class="counter" data-target="330" data-suffix="+">330+</span></div>
+        <div class="text-body text-[13px] mt-1">Centres &amp; clinics</div>
+      </div>
+      <div class="text-center py-7 px-2">
+        <div class="font-bold text-orange text-2xl md:text-3xl"><span class="counter" data-target="14" data-suffix="">14</span></div>
+        <div class="text-body text-[13px] mt-1">Cities</div>
+      </div>
+      <div class="text-center py-7 px-2">
+        <div class="font-bold text-orange text-2xl md:text-3xl"><span class="counter" data-target="250" data-suffix="+">250+</span></div>
+        <div class="text-body text-[13px] mt-1">Doctors &amp; experts</div>
+      </div>
+      <div class="text-center py-7 px-2 col-span-2 md:col-span-1">
+        <div class="font-bold text-orange text-2xl md:text-3xl">4.6/5</div>
+        <div class="text-body text-[13px] mt-1">Patient rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FIND VLCC NEAR YOU ===================== -->
+<section class="bg-white py-20 md:py-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10">
+    <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-14 reveal" id="find-heading">
+      <div>
+        <div class="text-orange font-bold text-[12px] tracking-[0.2em] mb-4">IN PERSON, NEAR YOU</div>
+        <h2 class="font-extrabold text-5xl md:text-7xl leading-[0.94] tracking-tight">FIND VLCC<br>NEAR YOU.</h2>
+      </div>
+      <p class="text-body text-[15px] leading-relaxed max-w-sm mt-1">Search by city, explore clinic services, and reserve a time that works for you.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-0 reveal-stagger" id="find-cards-reveal">
+      <!-- Book consultation -->
+      <div id="book" class="bg-navy text-white p-8 md:p-10 scroll-mt-24">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-9 h-9 rounded-full bg-orange flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.35 1.79.68 2.63a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.45-1.45a2 2 0 012.11-.45c.84.33 1.73.56 2.63.68A2 2 0 0122 16.92z"/></svg>
+          </span>
+          <span class="text-[12px] tracking-[0.15em] font-semibold text-white/80">PERSONALISED GUIDANCE</span>
+        </div>
+        <h3 class="font-display font-bold text-2xl md:text-[28px] mb-4">BOOK A CONSULTATION</h3>
+        <p class="text-white/70 text-[14px] leading-relaxed mb-7 max-w-md">A 5-minute assessment with a qualified expert is often the recommended first step, and we'll help you understand your care options.</p>
+
+        <form class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[12px] text-white/70 mb-1.5">Full name</label>
+              <input type="text" placeholder="e.g. Neha Sharma" class="navy-input w-full bg-navy-input border border-white/15 px-3.5 py-3 text-[13.5px] text-white focus:border-orange transition-colors">
+            </div>
+            <div>
+              <label class="block text-[12px] text-white/70 mb-1.5">Mobile number</label>
+              <input type="text" placeholder="e.g. 98700 12345" class="navy-input w-full bg-navy-input border border-white/15 px-3.5 py-3 text-[13.5px] text-white focus:border-orange transition-colors">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[12px] text-white/70 mb-1.5">What would you like help with?</label>
+              <select class="navy-input w-full bg-navy-input border border-white/15 px-3.5 py-3 text-[13.5px] text-white focus:border-orange transition-colors appearance-none">
+                <option>Weight management</option>
+                <option>Skin treatment</option>
+                <option>Hair treatment</option>
+                <option>Body care</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[12px] text-white/70 mb-1.5">Preferred time</label>
+              <select class="navy-input w-full bg-navy-input border border-white/15 px-3.5 py-3 text-[13.5px] text-white focus:border-orange transition-colors appearance-none">
+                <option>Any time — 10 AM - 1 PM</option>
+                <option>1 PM - 4 PM</option>
+                <option>4 PM - 8 PM</option>
+              </select>
+            </div>
+          </div>
+          <label class="flex items-center gap-2.5 text-[13px] text-white/70 pt-1 cursor-pointer">
+            <input type="checkbox" class="appearance-none w-[18px] h-[18px] rounded-[3px] border border-white/50 bg-transparent checked:bg-orange checked:border-orange shrink-0 cursor-pointer transition-colors"> I accept a callback and privacy terms.
+          </label>
+          <button type="button" class="group w-full flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white text-[13px] font-bold tracking-wide py-4 transition-all duration-300 mt-2">
+            REQUEST CONSULTATION
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </button>
+        </form>
+
+        <div class="flex items-center gap-6 mt-6 pt-6 border-t border-white/15 text-[13px] text-white/70">
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.35 1.79.68 2.63a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.45-1.45a2 2 0 012.11-.45c.84.33 1.73.56 2.63.68A2 2 0 0122 16.92z"/></svg>1800 123 222</span>
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Mon–Sun, 9 AM – 8 PM</span>
+        </div>
+      </div>
+
+      <!-- Search centre -->
+      <div class="bg-card p-8 md:p-10">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-9 h-9 rounded-full bg-orange flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="text-[12px] tracking-[0.15em] font-semibold text-orange">FIND YOUR NEAREST CENTRE</span>
+        </div>
+        <h3 class="font-display font-bold text-2xl md:text-[28px] mb-4">SEARCH CENTRE NEAR YOU</h3>
+        <p class="text-body text-[14px] leading-relaxed mb-7 max-w-md">350+ centres across India. Search by centre, city or pincode and book your visit.</p>
+
+        <div class="relative mb-4">
+          <svg class="w-4 h-4 text-orange absolute left-4 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="e.g. 110024" class="w-full bg-white border border-black/15 pl-11 pr-4 py-3.5 text-[13.5px] focus:border-orange transition-colors">
+        </div>
+        <div class="flex flex-wrap gap-3 mb-7">
+          <button class="group flex items-center gap-2 bg-orange hover:bg-orange-dark text-white text-[12.5px] font-bold tracking-wide px-6 py-3.5 transition-all duration-300">
+            FIND A CENTRE
+            <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </button>
+          <button class="flex items-center gap-2 border border-ink/30 text-ink text-[12.5px] font-bold tracking-wide px-6 py-3.5 hover:bg-ink hover:text-white transition-all duration-300">
+            USE MY LOCATION
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+        <div class="divide-y divide-black/10 border-t border-black/10">
+          <a href="#" class="group flex items-center justify-between py-4 hover:pl-2 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <div class="font-bold text-[16px] group-hover:text-orange transition-colors">VLCC Greater Kailash</div>
+                <div class="text-body text-[13.5px] mt-0.5">New Delhi</div>
+              </div>
+            </div>
+            <span class="text-orange text-[14px] font-bold">4.6 km</span>
+          </a>
+          <a href="#" class="group flex items-center justify-between py-4 hover:pl-2 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <div class="font-bold text-[16px] group-hover:text-orange transition-colors">VLCC Noida</div>
+                <div class="text-body text-[13.5px] mt-0.5">Noida</div>
+              </div>
+            </div>
+            <span class="text-orange text-[14px] font-bold">5.5 km</span>
+          </a>
+          <a href="#" class="group flex items-center justify-between py-4 hover:pl-2 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <div class="font-bold text-[16px] group-hover:text-orange transition-colors">VLCC Gurgaon</div>
+                <div class="text-body text-[13.5px] mt-0.5">Gurgaon</div>
+              </div>
+            </div>
+            <span class="text-orange text-[14px] font-bold">6.5 km</span>
+          </a>
+        </div>
+        <a href="#" class="link-underline inline-flex items-center gap-1.5 text-orange text-[13.5px] font-bold mt-5">View all centres
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERT CARE AT 300+ CLINICS ===================== -->
+<section class="bg-cream py-20 md:py-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 items-center">
+    <div class="reveal" id="expert-text-reveal">
+      <div class="text-orange font-bold text-[12px] tracking-[0.2em] mb-4">BEYOND THE EXPECTATIONS</div>
+      <h2 class="font-display font-semibold leading-[1.0] mb-6"><span class="text-5xl md:text-6xl">EXPERT CARE AT</span><br><span class="text-6xl md:text-7xl">300+ VLCC CLINICS</span></h2>
+      <p class="text-body text-[16px] leading-relaxed max-w-md mb-8">When your skin needs more, our certified dermatologists and therapists are here. Book a personalised consultation and treatment plan at a clinic near you.</p>
+      <ul class="space-y-4">
+        <li class="flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-orange flex items-center justify-center shrink-0"><svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span class="font-bold text-[16px]">ADVANCED SKIN &amp; ACNE TREATMENTS</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-orange flex items-center justify-center shrink-0"><svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span class="font-bold text-[16px]">LASER HAIR REDUCTION</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-orange flex items-center justify-center shrink-0"><svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span class="font-bold text-[16px]">ANTI-AGEING &amp; SKIN TIGHTENING</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-orange flex items-center justify-center shrink-0"><svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span class="font-bold text-[16px]">PERSONALISED WELLNESS PLANS</span>
+        </li>
+      </ul>
+    </div>
+    <div class="relative reveal" id="expert-img-reveal">
+      <div class="overflow-hidden">
+        <img src="assets/expert_care.jpg" class="w-full h-[420px] object-cover hover:scale-105 transition-transform duration-700">
+      </div>
+      <div class="absolute -left-8 top-10 w-28 h-28 hidden md:flex group/badge cursor-pointer">
+        <div class="relative w-28 h-28 transition-transform duration-500 ease-out group-hover/badge:scale-[1.08]">
+          <svg class="absolute top-0 right-0 bottom-0 left-0 w-28 h-28 text-orange" viewBox="0 0 100 100">
+            <defs><path id="circlePath3" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <circle cx="50" cy="50" r="48" fill="#F37021"/>
+            <text fill="white" font-size="8.3" font-weight="700" letter-spacing="1.5">
+              <textPath href="#circlePath3" startOffset="0%">100% PROVEN RESULTS • 100% PROVEN RESULTS •</textPath>
+            </text>
+          </svg>
+          <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+            <div class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow transition-transform duration-500 group-hover/badge:scale-110">
+              <svg class="w-4 h-4 text-orange ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VLCC JOURNAL ===================== -->
+<section class="bg-white py-20 md:py-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 reveal" id="journal-heading">
+      <div>
+        <div class="flex items-center gap-3 text-orange font-bold text-[12px] tracking-[0.2em] mb-4">
+          <span class="w-8 h-px bg-orange"></span> VLCC JOURNAL
+        </div>
+        <h2 class="font-display font-bold text-5xl md:text-6xl leading-[1.0]">WELLNESS, EXPLAINED BY THE<br>PEOPLE WHO PRACTISE IT.</h2>
+      </div>
+      <a href="#" class="link-underline inline-flex items-center gap-1.5 text-ink text-[13.5px] font-bold whitespace-nowrap">READ ALL STORIES
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-8 border-b border-black/10 mb-10 text-[16px] font-semibold overflow-x-auto" id="journal-tabs">
+      <button class="tab-btn relative py-4 text-orange whitespace-nowrap" data-tab="0">Weight &amp; Nutrition
+        <span class="tab-underline absolute left-0 -bottom-px w-full h-[2px] bg-orange"></span>
+      </button>
+      <button class="tab-btn relative py-4 text-body hover:text-ink transition-colors whitespace-nowrap" data-tab="1">Skin</button>
+      <button class="tab-btn relative py-4 text-body hover:text-ink transition-colors whitespace-nowrap" data-tab="2">Hair</button>
+      <button class="tab-btn relative py-4 text-body hover:text-ink transition-colors whitespace-nowrap" data-tab="3">Body &amp; Wellness</button>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 reveal-stagger" id="journal-reveal">
+      <a href="#" class="group block">
+        <div class="relative overflow-hidden aspect-[4/3] mb-5">
+          <img src="assets/journal_1.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <span class="absolute bottom-4 right-4 w-11 h-11 bg-card flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1 group-hover:bg-orange">
+            <svg class="w-4 h-4 text-ink group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </span>
+        </div>
+        <div class="text-orange font-bold text-[11.5px] tracking-[0.15em] mb-2">SKIN SCIENCE</div>
+        <h3 class="font-bold text-2xl leading-snug mb-3 group-hover:text-orange transition-colors">What your barrier is asking for in summer</h3>
+        <span class="link-underline inline-flex items-center gap-1.5 text-orange text-[13.5px] font-bold">Read article
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a href="#" class="group block">
+        <div class="relative overflow-hidden aspect-[4/3] mb-5">
+          <img src="assets/journal_2.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <span class="absolute bottom-4 right-4 w-11 h-11 bg-card flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1 group-hover:bg-orange">
+            <svg class="w-4 h-4 text-ink group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </span>
+        </div>
+        <div class="text-orange font-bold text-[11.5px] tracking-[0.15em] mb-2">BEAUTY RITUALS</div>
+        <h3 class="font-bold text-2xl leading-snug mb-3 group-hover:text-orange transition-colors">The five-minute ritual that changes the way you begin</h3>
+        <span class="link-underline inline-flex items-center gap-1.5 text-orange text-[13.5px] font-bold">Read article
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a href="#" class="group block">
+        <div class="relative overflow-hidden aspect-[4/3] mb-5">
+          <img src="assets/journal_3.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <span class="absolute bottom-4 right-4 w-11 h-11 bg-card flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1 group-hover:bg-orange">
+            <svg class="w-4 h-4 text-ink group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </span>
+        </div>
+        <div class="text-orange font-bold text-[11.5px] tracking-[0.15em] mb-2">EXPERT ADVICE</div>
+        <h3 class="font-bold text-2xl leading-snug mb-3 group-hover:text-orange transition-colors">How to build a routine around your real life</h3>
+        <span class="link-underline inline-flex items-center gap-1.5 text-orange text-[13.5px] font-bold">Read article
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KNOW YOUR NUMBERS ===================== -->
+<section class="bg-white pb-20 md:pb-24">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10">
+    <div class="relative bg-near overflow-hidden grid md:grid-cols-2 reveal" id="numbers-reveal"
+      style="background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 22px 22px;">
+      <div class="p-10 md:p-16 flex flex-col justify-center">
+        <div class="text-white/60 font-bold text-[12px] tracking-[0.2em] mb-5">PERSONAL BEAUTY DISCOVERY</div>
+        <h2 class="font-display font-bold text-white text-4xl md:text-[52px] leading-[1.0] mb-1">KNOW YOUR NUMBERS</h2>
+        <h3 class="font-display font-semibold text-white/90 text-3xl md:text-[40px] leading-[1.05] mb-6">BEFORE YOU DECIDE ANYTHING</h3>
+        <p class="text-white/70 text-[15px] leading-relaxed max-w-sm mb-9">Find the right VLCC solution for your concern with a little expert guidance.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#" class="group flex items-center gap-2 bg-orange hover:bg-orange-dark text-white text-[13px] font-bold tracking-wide px-7 py-4 transition-all duration-300">
+            START YOUR JOURNEY
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+          <a href="#book" class="flex items-center gap-2 border border-white/40 text-white text-[13px] font-bold tracking-wide px-7 py-4 hover:bg-white hover:text-ink transition-all duration-300">
+            BOOK CONSULTATION
+          </a>
+        </div>
+      </div>
+      <div class="relative min-h-[280px] md:min-h-[420px] overflow-hidden">
+        <img src="assets/know_numbers.jpg" class="absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="bg-navy text-white border-t-4 border-orange">
+  <div class="max-w-[1568px] mx-auto px-6 md:px-10 py-20 md:py-24">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/10">
+      <div>
+        <img src="assets/vlcc-logo.png" alt="VLCC" class="h-10 w-auto select-none mb-5">
+        <p class="font-display font-light text-white/60 text-xl leading-tight">BEAUTY, ROOTED IN SCIENCE.<br>CONSIDERED CARE FOR EVERY CONCERN.</p>
+      </div>
+      <div class="w-full md:w-[380px]">
+        <div class="text-white/50 font-semibold text-[12px] tracking-[0.2em] mb-4">THE VLCC LETTER</div>
+        <div class="flex items-center border-b border-white/30 pb-3 focus-within:border-orange transition-colors">
+          <input type="email" placeholder="Your email address" class="bg-transparent flex-1 text-[16px] placeholder-white/40 focus:outline-none">
+          <button class="group">
+            <svg class="w-5 h-5 text-orange transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-10 py-16">
+      <div>
+        <div class="text-orange font-bold text-[12.5px] tracking-[0.15em] mb-5">TREATMENTS &amp; SERVICES</div>
+        <ul class="space-y-4 text-[15px] text-white/75">
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Weight management</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Skin treatments</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Hair concerns</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Body contouring</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Laser hair reduction</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Salon services</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-orange font-bold text-[12.5px] tracking-[0.15em] mb-5">EXPLORE VLCC</div>
+        <ul class="space-y-4 text-[15px] text-white/75">
+          <li><a href="#" class="link-underline hover:text-white transition-colors">About VLCC</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Our experts</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">FAQs</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Patient stories</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Privacy policy</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">VLCC centres</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-orange font-bold text-[12.5px] tracking-[0.15em] mb-5">WELLNESS &amp; PROGRAMMES</div>
+        <ul class="space-y-4 text-[15px] text-white/75">
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Weight &amp; nutrition</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Skin</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Hair</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Body</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">BMI calculator</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-orange font-bold text-[12.5px] tracking-[0.15em] mb-5">NEED OUR HELP?</div>
+        <ul class="space-y-4 text-[15px] text-white/75">
+          <li><a href="#book" class="link-underline hover:text-white transition-colors">Book a consultation</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Find a centre</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Contact us</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Careers</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Safety &amp; hygiene</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-orange font-bold text-[12.5px] tracking-[0.15em] mb-5">CORPORATE</div>
+        <ul class="space-y-4 text-[15px] text-white/75">
+          <li><a href="#" class="link-underline hover:text-white transition-colors">About</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Careers</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Investor relations</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Media &amp; awards</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Terms &amp; conditions</a></li>
+          <li><a href="#" class="link-underline hover:text-white transition-colors">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-10 border-t border-white/10">
+      <div class="text-white/50 text-[14px]">© 2026 VLCC. All rights reserved.</div>
+      <div class="flex items-center gap-3">
+        <a href="#" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-orange hover:border-orange transition-all duration-300"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></a>
+        <a href="#" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-orange hover:border-orange transition-all duration-300"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9V6.5a1.5 1.5 0 011.5-1.5H17V2h-2.5A4.5 4.5 0 0010 6.5V9H8v3h2v10h3V12h2.5l.5-3H13V7a1 1 0 011-1z"/></svg></a>
+        <a href="#" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-orange hover:border-orange transition-all duration-300"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4.5a2.5 2.5 0 015 0V17M12 10v7"/></svg></a>
+        <a href="#" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-orange hover:border-orange transition-all duration-300"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  (function () {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('menuIconOpen');
+    const iconClose = document.getElementById('menuIconClose');
+    if (!btn || !menu) return;
+
+    function setOpen(open) {
+      menu.classList.toggle('hidden', !open);
+      iconOpen.classList.toggle('hidden', open);
+      iconClose.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+    }
+
+    btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  })();
+
+  // Scroll reveal via IntersectionObserver — progressive enhancement only.
+  // Content is visible by default in CSS; we only add the hidden "pre"
+  // state if this browser actually supports IntersectionObserver, so a
+  // failure or missing API can never leave content permanently invisible.
+  if ('IntersectionObserver' in window) {
+    const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+    revealEls.forEach(el => el.classList.add('pre'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          entry.target.classList.remove('pre');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+
+    // hero reveals immediately (above the fold) rather than waiting on scroll
+    const heroEl = document.getElementById('hero-reveal');
+    requestAnimationFrame(() => { heroEl.classList.add('in'); heroEl.classList.remove('pre'); });
+  }
+
+  // Counter animation — falls back to the final static value (already in
+  // the markup) if IntersectionObserver isn't available.
+  if ('IntersectionObserver' in window) {
+    const counters = document.querySelectorAll('.counter');
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target, 10);
+          const suffix = el.dataset.suffix || '';
+          const duration = 1400;
+          const start = performance.now();
+          function tick(now) {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            const val = Math.round(eased * target);
+            el.textContent = val + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          counterIO.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(c => counterIO.observe(c));
+  }
+
+  // Nav shadow on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.classList.add('shadow-[0_4px_20px_rgba(0,0,0,0.06)]');
+    } else {
+      nav.classList.remove('shadow-[0_4px_20px_rgba(0,0,0,0.06)]');
+    }
+  });
+
+  // Concern carousel — always-on gentle auto-scroll (seamless infinite loop
+  // via the duplicated card set above), plus drag/swipe to browse manually.
+  (function () {
+    const rail = document.getElementById('concern-rail');
+    if (!rail) return;
+    let isDown = false, startX = 0, startScroll = 0, moved = false;
+    let autoPaused = false, resumeTimer = null;
+
+    const pointerDown = (x) => { isDown = true; moved = false; startX = x; startScroll = rail.scrollLeft; rail.classList.add('dragging'); pauseAuto(); };
+    const pointerMove = (x) => {
+      if (!isDown) return;
+      const delta = x - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      rail.scrollLeft = startScroll - delta;
+    };
+    const pointerUp = () => { isDown = false; rail.classList.remove('dragging'); scheduleResume(); };
+
+    rail.addEventListener('mousedown', (e) => { pointerDown(e.pageX); e.preventDefault(); });
+    window.addEventListener('mousemove', (e) => pointerMove(e.pageX));
+    window.addEventListener('mouseup', pointerUp);
+
+    // Prevent a dragged card from firing its click/navigation
+    rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+    // Touch: let native scrolling handle it, just track for click suppression
+    rail.addEventListener('touchstart', (e) => { pointerDown(e.touches[0].pageX); pauseAuto(); }, { passive: true });
+    rail.addEventListener('touchmove', (e) => { moved = Math.abs(e.touches[0].pageX - startX) > 4; }, { passive: true });
+    rail.addEventListener('touchend', () => { pointerUp(); scheduleResume(); });
+
+    function pauseAuto() { autoPaused = true; if (resumeTimer) clearTimeout(resumeTimer); }
+    function scheduleResume() { if (resumeTimer) clearTimeout(resumeTimer); resumeTimer = setTimeout(() => { autoPaused = false; }, 2200); }
+    rail.addEventListener('mouseenter', pauseAuto);
+    rail.addEventListener('mouseleave', scheduleResume);
+
+    // The card set is duplicated in the markup, so once we scroll past the
+    // first half we silently rewind — the motion never stops or jumps.
+    const speed = 0.6; // px per frame, gentle and premium rather than fast
+    let halfWidth = 0;
+    function computeHalf() { halfWidth = rail.scrollWidth / 2; }
+    computeHalf();
+    window.addEventListener('resize', computeHalf);
+
+    function tick() {
+      if (!autoPaused && !isDown && halfWidth > 0) {
+        rail.scrollLeft += speed;
+        if (rail.scrollLeft >= halfWidth) {
+          rail.scrollLeft -= halfWidth;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // Journal tabs (visual state only)
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('text-orange');
+        b.classList.add('text-body');
+        const u = b.querySelector('.tab-underline');
+        if (u) u.remove();
+      });
+      btn.classList.remove('text-body');
+      btn.classList.add('text-orange');
+      if (!btn.querySelector('.tab-underline')) {
+        const span = document.createElement('span');
+        span.className = 'tab-underline absolute left-0 -bottom-px w-full h-[2px] bg-orange';
+        btn.appendChild(span);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
